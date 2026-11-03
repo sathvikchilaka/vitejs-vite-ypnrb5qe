@@ -35,7 +35,6 @@ export default function ChatSidebar() {
   const searchRef = useRef<HTMLInputElement>(null);
   const debouncedSearch = useDebounce(search.trim().toLowerCase());
 
-  // One pass over messages: last message per conversation + which ones match the search.
   const { lastMessage, contentMatches } = useMemo(() => {
     const last = new Map<string, Message>();
     const matches = new Set<string>();

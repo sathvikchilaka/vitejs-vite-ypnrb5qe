@@ -10,7 +10,6 @@ import Avatar from './Avatar';
 const railButton =
   'relative flex h-10 w-10 items-center justify-center rounded-full text-ink-muted transition-colors hover:bg-selected';
 
-// Left icon rail, like WhatsApp Web. Chats + bottom controls (network, theme); Settings is decorative.
 export default function NavRail() {
   const theme = useChatStore((state) => state.theme);
   const toggleTheme = useChatStore((state) => state.toggleTheme);
@@ -22,7 +21,7 @@ export default function NavRail() {
       <button aria-label="Chats" aria-current="page" className={`${railButton} bg-selected text-ink`}>
         <MessageSquareText size={22} />
         {unreadChats > 0 && (
-          <span className="absolute -top-0.5 -right-0.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-brand px-1 text-[11px] font-semibold text-white">
+          <span className="absolute -top-0.5 -right-0.5 flex h-4.5 min-w-4.5 items-center justify-center rounded-full bg-brand px-1 text-[11px] font-semibold text-white">
             {unreadChats}
           </span>
         )}

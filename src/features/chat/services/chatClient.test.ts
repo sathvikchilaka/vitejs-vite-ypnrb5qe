@@ -8,7 +8,7 @@ const status = (content: string) => useChatStore.getState().messages.find((m) =>
 describe('chat client (fake socket)', () => {
   beforeEach(() => {
     jest.useFakeTimers();
-    jest.spyOn(Math, 'random').mockReturnValue(0.5); // never fails
+    jest.spyOn(Math, 'random').mockReturnValue(0.5);
     useChatStore.setState({
       conversations: JSON.parse(JSON.stringify(initialConversations)),
       messages: JSON.parse(JSON.stringify(initialMessages)),
@@ -16,7 +16,7 @@ describe('chat client (fake socket)', () => {
       online: true,
     });
     connect();
-    jest.advanceTimersByTime(300); // socket opens
+    jest.advanceTimersByTime(300);
   });
 
   afterEach(() => {
@@ -55,7 +55,7 @@ describe('chat client (fake socket)', () => {
   });
 
   test('failed messages can be retried', () => {
-    (Math.random as jest.Mock).mockReturnValue(0); // force failure
+    (Math.random as jest.Mock).mockReturnValue(0);
     sendChatMessage('c1', 'flaky');
     jest.advanceTimersByTime(1000);
     expect(status('flaky')).toBe('failed');

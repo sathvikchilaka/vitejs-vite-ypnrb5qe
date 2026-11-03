@@ -86,7 +86,7 @@ export default function MessageComposer({ conversationId, replyTo, onCancelReply
       {attachments.error && <p className="mb-1 text-xs text-red-500">{attachments.error}</p>}
 
       <form onSubmit={handleSubmit(onSubmit)} className="flex items-end gap-2">
-        <div className="flex min-h-[52px] flex-1 items-end gap-1 rounded-[26px] bg-bubble-in px-2 py-1.5 shadow-sm">
+        <div className="flex min-h-13 flex-1 items-end gap-1 rounded-[26px] bg-bubble-in px-2 py-1.5 shadow-sm">
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
@@ -143,7 +143,7 @@ export default function MessageComposer({ conversationId, replyTo, onCancelReply
           <button
             type="submit"
             aria-label="Send message"
-            className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full bg-brand text-white shadow-sm transition-colors hover:opacity-90"
+            className="flex h-13 w-13 shrink-0 items-center justify-center rounded-full bg-brand text-white shadow-sm transition-colors hover:opacity-90"
           >
             <SendHorizontal size={22} />
           </button>

@@ -1,6 +1,4 @@
-// A tiny in-browser stand-in for a WebSocket server. Same shape as the
-// browser WebSocket API (readyState, send, close, onopen/onclose/onmessage),
-// so swapping in `new WebSocket(url)` later only touches chatClient.ts.
+// fake server with the same api as WebSocket
 
 export type ClientEvent = {
   type: 'message';

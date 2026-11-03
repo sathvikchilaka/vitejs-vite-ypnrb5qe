@@ -10,7 +10,7 @@ export default function App() {
     document.documentElement.classList.toggle('dark', theme === 'dark');
   }, [theme]);
 
-  // Connect only after persisted state loads, so the offline queue from a previous session flushes.
+  // wait for persisted state so old queued messages get sent
   useEffect(() => (hydrated ? startRealtime() : undefined), [hydrated]);
 
   return (

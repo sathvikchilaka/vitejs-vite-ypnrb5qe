@@ -5,8 +5,6 @@ import { useChatStore } from '../store/useChatStore';
 
 import { FakeSocket, type ServerEvent } from './fakeSocket';
 
-// Bridges the socket and the store. UI calls these functions; it never
-// touches the socket directly.
 
 let socket: FakeSocket | null = null;
 const store = () => useChatStore.getState();
@@ -62,7 +60,7 @@ export function connect() {
   };
   next.onmessage = ({ data }) => handle(JSON.parse(data));
   next.onclose = () => {
-    // In-flight messages lost their ack — requeue them.
+    // these won't get an ack now, put them back in the queue
     store().messages
       .filter((m) => m.status === 'sending')
       .forEach((m) => store().updateMessageStatus(m.id, 'queued'));
@@ -97,7 +95,6 @@ export function retryMessage(message: Message) {
   else store().updateMessageStatus(message.id, 'queued');
 }
 
-/** Starts the socket and follows the browser's real online/offline events. Returns cleanup. */
 export function startRealtime() {
   const onOnline = () => setNetwork(true);
   const onOffline = () => setNetwork(false);

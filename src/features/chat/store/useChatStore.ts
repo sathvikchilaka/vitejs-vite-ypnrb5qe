@@ -82,7 +82,6 @@ export const useChatStore = create<ChatState>()(
           senderId: CURRENT_USER_ID,
           content,
           createdAt: Date.now(),
-          // Optimistic: visible immediately; offline messages wait in the queue.
           status: get().online ? 'sending' : 'queued',
           replyToId,
           attachments,
@@ -228,7 +227,7 @@ export const useChatStore = create<ChatState>()(
         theme: state.theme,
       }),
       onRehydrateStorage: () => (state) => {
-        // A reload interrupts in-flight sends: move them back to the queue.
+        // anything still sending when the page closed goes back to the queue
         const { selectedConversationId, conversations } = useChatStore.getState();
         useChatStore.setState({
           hydrated: true,

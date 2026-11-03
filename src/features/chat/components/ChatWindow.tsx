@@ -36,7 +36,6 @@ export default function ChatWindow() {
     );
   }
 
-  // Keyed so pagination, search and reply state reset per conversation.
   return <ConversationView key={conversation.id} conversation={conversation} />;
 }
 

@@ -50,12 +50,11 @@ export default function VirtualMessageList({ messages, hasMore, loading, loadOld
     return () => observer.disconnect();
   }, []);
 
-  // Runs after every render: keep scroll position stable, then measure real row heights.
   useLayoutEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
-    // Older page prepended → shift down by the added height so the view doesn't jump.
+    // older messages were added on top, keep the current view in place
     const firstId = rows[0]?.id ?? '';
     if (previous.current.firstId && firstId !== previous.current.firstId && !atBottomRef.current) {
       container.scrollTop += container.scrollHeight - previous.current.scrollHeight;
@@ -68,7 +67,7 @@ export default function VirtualMessageList({ messages, hasMore, loading, loadOld
       const old = heights.current.get(id) ?? ESTIMATED_ROW_HEIGHT;
       if (height === old) return;
 
-      // Row above the viewport grew/shrank → compensate so visible content stays put.
+      // a row above us changed height
       if (element.offsetTop + old <= container.scrollTop) container.scrollTop += height - old;
       heights.current.set(id, height);
       changed = true;
@@ -107,7 +106,7 @@ export default function VirtualMessageList({ messages, hasMore, loading, loadOld
         {!hasMore && messages.length > 0 && (
           <p className="mx-auto my-3 flex max-w-md items-start gap-1.5 rounded-lg bg-notice px-3 py-1.5 text-center text-xs leading-snug text-notice-ink shadow-sm">
             <Lock size={12} className="mt-0.5 shrink-0" />
-            Messages are end-to-end simulated. They stay in this browser and nobody outside this chat can read them.
+            Messages are saved only in this browser.
           </p>
         )}
 

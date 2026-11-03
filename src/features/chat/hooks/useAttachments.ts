@@ -18,7 +18,6 @@ const readAsDataUrl = (file: File) =>
     reader.readAsDataURL(file);
   });
 
-/** Local-file previews via object URLs (revoked on remove/unmount); data URLs on send so they persist. */
 export function useAttachments() {
   const [files, setFiles] = useState<PendingFile[]>([]);
   const [error, setError] = useState<string | null>(null);

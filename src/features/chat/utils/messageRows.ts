@@ -14,7 +14,6 @@ export function getDateLabel(timestamp: number, now = new Date()) {
   return date.toLocaleDateString([], { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
-/** Flattens sorted messages into rows, inserting a date separator when the day changes. */
 export function buildRows(messages: Message[], now = new Date()): Row[] {
   const rows: Row[] = [];
   let previousDay = '';
@@ -27,7 +26,6 @@ export function buildRows(messages: Message[], now = new Date()): Row[] {
       previousDay = day;
       previousSender = '';
     }
-    // first = starts a run from one sender → gets the bubble tail + extra top gap
     rows.push({ kind: 'message', id: message.id, message, first: message.senderId !== previousSender });
     previousSender = message.senderId;
   }

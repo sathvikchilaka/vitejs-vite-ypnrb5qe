@@ -25,7 +25,6 @@ import { formatTime } from '../utils/messageRows';
 interface Props {
   message: Message;
   replyMessage?: Message;
-  /** First of a run from the same sender: shows tail + name, adds top gap. */
   first?: boolean;
   onReply: (message: Message) => void;
 }
@@ -50,7 +49,7 @@ function StatusIcon({ message }: { message: Message }) {
   }
 }
 
-// Invisible inline space at the end of the text so the absolutely positioned time/ticks never overlap it (WhatsApp trick).
+// reserves room for the time so text doesn't run under it
 const MetaSpacer = ({ width = 64 }: { width?: number }) => (
   <span aria-hidden className="inline-block" style={{ width }} />
 );
@@ -83,7 +82,7 @@ function MessageBubble({ message, replyMessage, first = true, onReply }: Props) 
     try {
       await navigator.clipboard.writeText(message.content);
     } catch {
-      /* clipboard unavailable (e.g. insecure context) */
+      // ignore
     }
   };
 

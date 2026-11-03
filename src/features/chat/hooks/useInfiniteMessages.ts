@@ -5,11 +5,6 @@ import type { Message } from '../types/chat';
 export const PAGE_SIZE = 50;
 const FAKE_LATENCY = 400;
 
-/**
- * Shows the newest PAGE_SIZE messages and reveals older pages on demand,
- * simulating a paginated "load older" API. New messages always appear
- * because the window is anchored to the end of the list.
- */
 export function useInfiniteMessages(messages: Message[]) {
   const [count, setCount] = useState(PAGE_SIZE);
   const [loading, setLoading] = useState(false);
