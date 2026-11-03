@@ -10,7 +10,7 @@ interface AvatarProps {
 const sizes = {
   sm: 'h-9 w-9 text-xs',
   md: 'h-11 w-11 text-sm',
-  lg: 'h-14 w-14 text-lg',
+  lg: 'h-12 w-12 text-base',
 };
 
 export default function Avatar({
@@ -37,7 +37,7 @@ export default function Avatar({
           rounded-full font-semibold text-white
         `}
         style={{
-          backgroundColor: user?.color || '#6366f1',
+          backgroundColor: user?.color || 'var(--brand)',
         }}
       >
         {initials}
@@ -48,8 +48,7 @@ export default function Avatar({
           className="
             absolute bottom-0 right-0
             h-3 w-3 rounded-full
-            border-2 border-white bg-green-500
-            dark:border-slate-900
+            border-2 border-panel bg-brand
           "
         />
       )}

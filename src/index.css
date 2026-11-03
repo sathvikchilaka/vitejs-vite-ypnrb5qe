@@ -2,72 +2,140 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* WhatsApp Web palette. Components use the semantic tokens below
+   (bg-panel, bg-bubble-out, text-ink-muted, …); .dark swaps values. */
 :root {
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system,
-    BlinkMacSystemFont, 'Segoe UI', sans-serif;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
+  --app: oklch(0.97 0.003 250);          /* #f0f2f5 */
+  --rail: oklch(0.97 0.003 250);
+  --panel: oklch(1 0 0);
+  --panel-header: oklch(1 0 0);
+  --input: oklch(0.97 0.003 250);
+  --hover: oklch(0.97 0.003 250);
+  --selected: oklch(0.94 0.004 250);
+  --chat: oklch(0.94 0.012 80);          /* #efeae2 */
+  --doodle: oklch(0.5 0.02 80 / 0.07);
+  --bubble-in: oklch(1 0 0);
+  --bubble-out: oklch(0.97 0.06 140);    /* #d9fdd3 */
+  --ink: oklch(0.22 0.02 240);           /* #111b21 */
+  --ink-muted: oklch(0.53 0.02 240);     /* #667781 */
+  --line: oklch(0.93 0.004 250);
+  --brand: oklch(0.65 0.14 165);         /* #00a884 */
+  --brand-soft: oklch(0.93 0.05 160);    /* #d9fdd3-ish chip */
+  --brand-ink: oklch(0.35 0.07 165);
+  --tick-read: oklch(0.7 0.13 230);      /* #53bdeb */
+  --notice: oklch(0.96 0.05 90);         /* #ffeecd */
+  --notice-ink: oklch(0.45 0.03 80);
 }
 
-* {
-  box-sizing: border-box;
+.dark {
+  --app: oklch(0.2 0.015 240);           /* #111b21 */
+  --rail: oklch(0.25 0.015 240);         /* #202c33 */
+  --panel: oklch(0.2 0.015 240);
+  --panel-header: oklch(0.2 0.015 240);
+  --input: oklch(0.25 0.015 240);
+  --hover: oklch(0.25 0.015 240);
+  --selected: oklch(0.3 0.015 240);      /* #2a3942 */
+  --chat: oklch(0.17 0.012 240);         /* #0b141a */
+  --doodle: oklch(1 0 0 / 0.035);
+  --bubble-in: oklch(0.25 0.015 240);    /* #202c33 */
+  --bubble-out: oklch(0.42 0.08 170);    /* #005c4b */
+  --ink: oklch(0.94 0.005 240);          /* #e9edef */
+  --ink-muted: oklch(0.65 0.02 240);     /* #8696a0 */
+  --line: oklch(0.28 0.015 240);
+  --brand-soft: oklch(0.32 0.05 170);
+  --brand-ink: oklch(0.85 0.08 165);
+  --notice: oklch(0.27 0.02 240);
+  --notice-ink: oklch(0.82 0.08 85);
+}
+
+@theme inline {
+  --color-app: var(--app);
+  --color-panel: var(--panel);
+  --color-rail: var(--rail);
+  --color-input: var(--input);
+  --color-brand-soft: var(--brand-soft);
+  --color-brand-ink: var(--brand-ink);
+  --color-notice: var(--notice);
+  --color-notice-ink: var(--notice-ink);
+  --color-panel-header: var(--panel-header);
+  --color-hover: var(--hover);
+  --color-selected: var(--selected);
+  --color-chat: var(--chat);
+  --color-bubble-in: var(--bubble-in);
+  --color-bubble-out: var(--bubble-out);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-line: var(--line);
+  --color-brand: var(--brand);
+  --color-tick-read: var(--tick-read);
+  --font-sans: 'Segoe UI', Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+@keyframes typing-dot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-3px); opacity: 1; }
+}
+
+@utility animate-typing {
+  animation: typing-dot 1.2s infinite;
 }
 
 html,
 body,
 #root {
-  width: 100%;
   height: 100%;
   margin: 0;
 }
 
-button {
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  background: var(--app);
+  color: var(--ink);
+}
+
+button:not(:disabled) {
   cursor: pointer;
 }
 
-button:disabled {
-  cursor: not-allowed;
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
 }
 
-textarea,
-input,
-button {
-  font: inherit;
-}
-
-/* Scrollbar */
-
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 999px;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background: #475569;
-}
-
-/* Selection */
-
-::selection {
-  background: #c7d2fe;
-  color: #312e81;
-}
-
-/* Focus accessibility */
-
-button:focus-visible,
-input:focus-visible,
-textarea:focus-visible {
-  outline: 2px solid #6366f1;
+:focus-visible {
+  outline: 2px solid var(--brand);
   outline-offset: 2px;
+}
+
+/* Doodle wallpaper: tiled inline SVG painted with currentColor = --doodle. */
+@utility bg-wallpaper {
+  background-color: var(--chat);
+  background-image: radial-gradient(var(--doodle) 1.5px, transparent 1.6px),
+    radial-gradient(var(--doodle) 1px, transparent 1.1px);
+  background-size: 28px 28px, 28px 28px;
+  background-position: 0 0, 14px 14px;
+}
+
+/* Bubble tail on the first message of a sender run. */
+@utility tail-in {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -8px;
+    border-top: 0 solid transparent;
+    border-right: 8px solid var(--bubble-in);
+    border-bottom: 13px solid transparent;
+  }
+}
+@utility tail-out {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -8px;
+    border-left: 8px solid var(--bubble-out);
+    border-bottom: 13px solid transparent;
+  }
 }
